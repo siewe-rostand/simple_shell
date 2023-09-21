@@ -17,7 +17,7 @@ void *_get_line(void)
 		free(buffer);
 		return (NULL);
 	}
-	for (i = 0; c!= EOF && c!= '\n; i++)
+	for (i = 0; c != EOF && c != '\n; i++)
 	{
 		fflush(stdin);
 		read_string = read(STDIN_FILEO, &c, 1);
