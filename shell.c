@@ -8,24 +8,33 @@
  *
  * Return: return 0 on success
  */
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **env)
 {
-	char *prompt = "#cisfun$ ";
-	char user_input[50];
-	int n = sizeof(user_input);
-
-	(void)argv; (void)argc; /*since they have not been used */
+	char *user_input, **cmd, **cmds;
+	int count = 0, i, st = 0;
 
 	while (1)
 	{
-		printf("%s", prompt);
-		if (fgets(user_input, n, stdin) == NULL)
-			break;
-		if (_strcmp(user_input, "exit") == 0)
-			break;
-
-		if (access(user_input, X_OK) != 0)
-			printf("./shell: No such file or directory\n");
+		count++;
+		if (isatty(STDIN_FILENO))
+			prompt();
+		user_input = _get_line();
+		if (user_input[0] == '\0')
+			continue;
+		for (i = 0; cmd[i] != NULL; i++)
+		{
+			cmd = parse_string(cmds[i]);
+			if (_strcmp(cmd[0], "exit") == 0)
+			{
+				free(cmds);
+			}
+			else
+				st = fork_wait(cmd, user_input, argv, env);
+			free(cmd);
+		}
+		free(user_input);
+		free(cmds);
+		wait(&st);
 	}
-	return (0);
+	return (st);
 }
