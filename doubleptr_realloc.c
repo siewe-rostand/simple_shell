@@ -8,7 +8,7 @@
  * Return: new ptr
  */
 
-char doubleptr_realloc(char **dbptr, unsigned int old_size,
+char **doubleptr_realloc(char **dbptr, unsigned int old_size,
 		unsigned int new_size)
 {
 	char **newptr;

@@ -9,7 +9,7 @@
  * Return: nothing
  */
 
-int fork_wait(char **cmd, char *input, char *argv[], char **env)
+int fork_wait(char **cmd, char *input, char **env)
 {
 	int wstatus;
 	pid_t pid;
@@ -26,14 +26,12 @@ int fork_wait(char **cmd, char *input, char *argv[], char **env)
 		if (execve(cmd[0], cmd, env) < 0)
 		{
 			perror("./shell: No such file or directory");
-			free_buffer(cmd);
-			free_buffer(argv);
-			free(input);
-			exit(1);
+			free_buffer(cmd, input);
+			exit(127);
 		}
 	}
 	wait(&wstatus);
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+	if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) != 0)
 		perror("./shell: No such file or directory");
 	return (127);
 }

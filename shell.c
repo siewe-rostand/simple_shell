@@ -11,9 +11,10 @@
  */
 int main(int argc, char **argv, char **env)
 {
-	char *user_input, **cmd, **cmds;
+	char *user_input = NULL, **cmd = NULL, **cmds =  NULL;
 	int count = 0, i, st = 0;
 
+	(void)argc; (void)argv;
 	while (1)
 	{
 		count++;
@@ -30,7 +31,7 @@ int main(int argc, char **argv, char **env)
 				free(cmds);
 			}
 			else
-				st = fork_wait(cmd, user_input, argv, env);
+				st = fork_wait(cmd, user_input, env);
 			free(cmd);
 		}
 		free(user_input);

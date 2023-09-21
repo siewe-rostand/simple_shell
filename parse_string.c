@@ -6,7 +6,7 @@
  * Return: Parsed strings to be used as arguments
  */
 
-char parse_string(char *user_input)
+char **parse_string(char *user_input)
 {
 	char **arguments;
 	char *argument;
