@@ -5,6 +5,7 @@
  *
  * @argc: number of arguments passed
  * @argv: pointer array pointing to argument passed
+ * @env: environment variable
  *
  * Return: return 0 on success
  */
