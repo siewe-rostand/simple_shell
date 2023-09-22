@@ -3,10 +3,11 @@
 /**
  * prompt - function containing the shell prompt
  *
- * Return: nothing
+ * @ch: character to be output
+ * Return: the promted int
  */
 
-void prompt(void)
+int prompt(char ch)
 {
-	print_string("#cisfun$ ");
+	return (write(STDERR_FILENO, c, _strlen(c)));
 }

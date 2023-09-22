@@ -37,7 +37,7 @@ char *_get_line(void)
 			return (handle_newline(buffer));
 		if (i >= buffersize)
 		{
-			buffer = _realloc(buffer, buffersize, (buffersize +2));
+			buffer = _realloc(buffer, buffersize, (buffersize + 2));
 			if (buffer == NULL)
 			{
 				free(buffer);
