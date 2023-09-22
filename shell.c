@@ -11,32 +11,41 @@
  */
 int main(int argc, char **argv, char **env)
 {
-	char *user_input = NULL, **cmd = NULL, **cmds =  NULL;
-	int count = 0, i, st = 0;
+	char *user_input, **cmd, **cmds;
+	int counter = 0, i = 0, status = 0;
 
+	if (argv[1] != Null)
+		fiel_cmd(argv[1], argv);
 	(void)argc; (void)argv;
 	while (1)
 	{
-		count++;
+		counter++;
 		if (isatty(STDIN_FILENO))
 			prompt();
 		user_input = _get_line();
 		if (user_input[0] == '\0')
 			continue;
-		for (i = 0; cmd[i] != NULL; i++)
+		while (cmd[i] != NULL)
 		{
 			cmd = parse_string(cmds[i]);
 			if (_strcmp(cmd[0], "exit") == 0)
 			{
 				free(cmds);
+				buildin_exit(cmd, user_input, argv, counter, status);
+			}else if (buildin_checker(cmd) == 0)
+			{
+				status = buildin_handler(cmd, status);
+				free(cmd);
+				continue;
 			}
 			else
-				st = fork_wait(cmd, user_input, env);
+				status = fork_wait(cmd, user_input, env);
 			free(cmd);
+			i++;
 		}
 		free(user_input);
 		free(cmds);
-		wait(&st);
+		wait(&status);
 	}
-	return (st);
+	return (status);
 }

@@ -58,3 +58,80 @@ int buildin_handler(char **cmd, int st)
 	}
 	return (-1);
 }
+
+/**
+ * _echo - function to execute the buiidin echo
+ * @cmd: input parsed command
+ * Return: 0 on Success -1 on error
+ */
+int buildin_echo(char **cmd)
+{
+        pid_t pid;
+        int status;
+
+        pid = fork();
+        if (pid == 0)
+        {
+                if (execve("/bin/echo", cmd, ENV) == -1)
+                {
+                        return (-1);
+                }
+                exit(EXIT_FAILURE);
+        }
+        else if (pid < 0)
+        {
+                return (-1);
+        }
+        else
+        {
+                do {
+                        waitpid(pid, &status, WUNTRACED);
+                } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+        }
+        return (1);
+}
+
+/**
+ * buildin_exit - function to give exit status of buildin cmd
+ * @cmd: parsed cmd strings
+ * @input: user input
+ * @argv: Arguments before program starts(argv[0] == Shell Program Name)
+ * @c: Shell execution count
+ * @stat: Exit status
+ */
+void buildin_exit(char **cmd, char *input, char **argv, int c, int stat)
+{
+	int status, i = 0;
+
+	if (cmd[1] == NULL)
+	{
+		free(input);
+		free(cmd);
+		exit(stat);
+	}
+	while (cmd[1][i])
+	{
+		if (_isalpha(cmd[1][i++]) != 0)
+		{
+			_prerror(argv, c, cmd);
+			free(input);
+			free(cmd);
+			exit(2);
+		}
+		else
+		{
+			status = _atoi(cmd[1]);
+			if (status == 2)
+			{
+				_prerror(argv, c, cmd);
+				free(input);
+				free(cmd);
+				exit(status);
+			}
+			free(input);
+			free(cmd);
+			exit(status);
+
+		}
+	}
+}

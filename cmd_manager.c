@@ -82,4 +82,38 @@ int cmd_exec(char **cmd, char *userinput, int c, char **argv)
         }
         return (127);
 }
-~
+
+/**
+ * cmd_history - shell user input cmd history function
+ * @cmd: user input cmd
+ * @status: last executed command history
+ * Return: 0 on success or -1 on error
+ */
+int cmd_history(__attribute__((unused))char **cmd, __attribute__((unused))int status)
+{
+	char *filename = ".shell_cmd_history";
+	FILE *filepath;
+	char *line = NULL;
+	size_t len = 0;
+	int counter = 0;
+	char *error;
+
+	filepath = fopen(filename, "r");
+	if (filepath == NULL)
+	{
+		return (-1);
+	}
+	while ((getline(&line, &len, filepath)) != -1)
+	{
+		counter++;
+		error = _itoc(counter);
+		prompt(error);
+		free(error);
+		prompt(" ");
+		prompt(line);
+	}
+	if (line)
+		free(line);
+	fclose(filepath);
+	return (0);
+}
