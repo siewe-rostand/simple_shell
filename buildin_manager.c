@@ -215,7 +215,7 @@ int _cd(char **cmd, __attribute__((unused))int st)
 
 	if (value == -1)
 	{
-		perror("hsh");
+		perror("shell");
 		return (-1);
 	}
 	else if (value != -1)

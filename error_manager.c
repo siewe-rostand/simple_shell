@@ -37,7 +37,7 @@ void errormessage(char *input, int counter, char **argv)
         free(error);
         prompt(": ");
         prompt(input);
-        prompt(": not found\n");
+        prompt(": No such file or directory\n");
 }
 
 /**
