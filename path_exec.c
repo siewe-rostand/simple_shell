@@ -14,7 +14,7 @@ int path_exec(char **cmd)
 	value = tokenizer(path, ":");
 	while (value != NULL)
 	{
-		cmd_path = _build_cmd(*cmd, value);
+		cmd_path = build_cmd(*cmd, value);
 		if (stat(cmd_path, &buf) == 0)
 		{
 			*cmd = _strdup(cmd_path);
@@ -23,7 +23,7 @@ int path_exec(char **cmd)
 			return (0);
 		}
 		free(cmd_path);
-		value = _strtok(NULL, ":");
+		value = tokenizer(NULL, ":");
 	}
 	free(path);
 	free(value);

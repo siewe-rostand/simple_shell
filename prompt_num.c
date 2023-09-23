@@ -26,3 +26,5 @@ void prompt_num(int n)
 	last = num % 10;
 	_putchar(last + '0');
 }
+
+

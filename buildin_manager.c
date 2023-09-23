@@ -39,11 +39,11 @@ int buildin_checker(char **cmd)
 int buildin_handler(char **cmd, int st)
 {
 	buildin build_in[] = {
-		{"cd", change_dir},
-		{"env", dis_env},
-		{"help", display_help},
-		{"echo", echo_bul},
-		{"history", history_dis},
+		{"cd", _cd},
+		{"env", show_env},
+		{"help", show_help},
+		{"echo", echo_buildin},
+		{"history", cmd_history},
 		{NULL, NULL}
 	};
 	int i = 0;
@@ -134,4 +134,95 @@ void buildin_exit(char **cmd, char *input, char **argv, int c, int stat)
 
 		}
 	}
+}
+
+
+
+/**
+ * echo_buildin - execute echo buildin  cases
+ * @st: latest cmd status
+ * @cmd: parsed command
+ * Return: Always 1 Or execute normal echo
+ */
+int echo_buildin(char **cmd, int st)
+{
+	char *path;
+	unsigned int pid = getppid();
+
+	if (_strncmp(cmd[1], "$?", 2) == 0)
+	{
+		prompt_int(st);
+		print_string("\n");
+	}
+	else if (_strncmp(cmd[1], "$$", 2) == 0)
+	{
+		prompt_num(pid);
+		prompt("\n");
+	}
+	else if (_strncmp(cmd[1], "$PATH", 5) == 0)
+	{
+		path = _get_env("PATH");
+		prompt(path);
+		prompt("\n");
+		free(path);
+	}
+	else
+		return (buildin_echo(cmd));
+
+	return (1);
+}
+
+/**
+ * show_env - function to show enviroment variable
+ * @cmd: parsed command
+ * @st: latest cmd status
+ * Return: Always 0
+ */
+int show_env(__attribute__((unused)) char **cmd, __attribute__((unused)) int st)
+{
+	size_t i;
+	int len;
+
+	for (i = 0; ENV[i] != NULL; i++)
+	{
+		len = _strlen(ENV[i]);
+		write(1, ENV[i], len);
+		write(STDOUT_FILENO, "\n", 1);
+	}
+	return (0);
+}
+
+
+/**
+ * cd - Changes directory
+ * @cmd: cmd to be parse
+ * @st: latest cmd status
+ * Return: 0 on success 1 on error (For OLDPWD Always 0 incase of no OLDPWD)
+ */
+int _cd(char **cmd, __attribute__((unused))int st)
+{
+	int value = -1;
+	char cwd[PATH_MAX];
+
+	if (cmd[1] == NULL)
+		value = chdir(getenv("HOME"));
+	else if (_strcmp(cmd[1], "-") == 0)
+	{
+		value = chdir(getenv("OLDPWD"));
+	}
+	else
+		value = chdir(cmd[1]);
+
+	if (value == -1)
+	{
+		perror("hsh");
+		return (-1);
+	}
+	else if (value != -1)
+	{
+		getcwd(cwd, sizeof(cwd));
+		setenv("OLDPWD", getenv("PWD"), 1);
+		setenv("PWD", cwd, 1);
+	}
+	return (0);
 }

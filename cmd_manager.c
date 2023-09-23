@@ -12,7 +12,7 @@ char **cmd_parser(char *userinput)
 	int i;
 	int bsize = BUFFSIZE;
 
-	if (userinput[0] == ' ' && input[_strlen(userinput)] == ' ')
+	if (userinput[0] == ' ' && userinput[_strlen(userinput)] == ' ')
 		exit(0);
 	if (userinput == NULL)
 		return (NULL);
@@ -58,14 +58,14 @@ int cmd_exec(char **cmd, char *userinput, int c, char **argv)
         if (pid == 0)
         {
                 if (_strncmp(*cmd, "./", 2) != 0 && _strncmp(*cmd, "/", 1) != 0)
-                        cmd_parser(cmd);
+                        path_exec(cmd);
                 if (access(cmd[0], R_OK) != 0)
                 {
                         errormessage(cmd[0], c, argv);
                         _free(cmd, userinput);
                         exit(127);
                 }
-                if (execve(*cmd, cmd, environ) == -1)
+                if (execve(*cmd, cmd, ENV) == -1)
                         return (2);
                 else
                         return (0);
@@ -116,4 +116,16 @@ int cmd_history(__attribute__((unused))char **cmd, __attribute__((unused))int st
 		free(line);
 	fclose(filepath);
 	return (0);
+}
+
+/**
+ * signal_to_handle - Configures ^C not to terminate our shell
+ * @sig: Incoming Signal
+ */
+void signal_to_handle(int sig)
+{
+	if (sig == SIGINT)
+	{
+		prompt("\n$ ");
+	}
 }

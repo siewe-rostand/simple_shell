@@ -14,7 +14,7 @@ void prompt_int(int num)
 		x = -x;
 	}
 	if ((x / 10) > 0)
-		print_number(x / 10);
+		prompt_num(x / 10);
 
 	_putchar(x % 10 + '0');
 }

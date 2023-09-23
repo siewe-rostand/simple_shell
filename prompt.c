@@ -7,7 +7,7 @@
  * Return: the promted int
  */
 
-int prompt(char ch)
+void prompt( char *ch)
 {
-	return (write(STDERR_FILENO, c, _strlen(c)));
+	write(STDERR_FILENO, ch, _strlen(ch));
 }

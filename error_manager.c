@@ -32,7 +32,7 @@ void errormessage(char *input, int counter, char **argv)
 
         prompt(argv[0]);
         prompt(": ");
-        er = _itoc(counter);
+        error = _itoc(counter);
         prompt(error);
         free(error);
         prompt(": ");

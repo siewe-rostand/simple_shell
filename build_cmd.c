@@ -1,12 +1,13 @@
 #include "shell.h"
 
 /**
- * _build_cmd - function to build cmd
+ * build_cmd - function to build cmd
  * @token: command to be executed
  * @dir: directory of the command
  * Return: full command path or null on error
  */
-char *_build_cmd(char *token, char *dir)
+
+char *build_cmd(char *token, char *dir)
 {
 	char *cmd;
 	size_t len;

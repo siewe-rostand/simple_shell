@@ -46,7 +46,7 @@ void treat_file(char *line, int count, FILE *filepath, char **argv)
 
         cmd = parse_string(line);
         if (_strncmp(cmd[0], "exit", 4) == 0)
-                file_exit_status(cmd, line, fp);
+                file_exit_status(cmd, line, filepath);
         else if (buildin_checker(cmd) == 0)
         {
                 stat = buildin_handler(cmd, stat);

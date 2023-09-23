@@ -6,6 +6,7 @@
  * @del: string delimiter
  * Return: pointer to the next token(string) or NULL
  */
+
 char *tokenizer(char *str, const char *del)
 {
 	static char *tokens;
