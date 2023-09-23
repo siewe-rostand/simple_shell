@@ -37,50 +37,50 @@ char **cmd_parser(char *userinput)
 /**
  * cmd_exec - function to execute command process
  * @cmd: buffers  strings
- * @input: user input
+ * @userinput: user input
  * @c:Shell Excution Time Case of Command Not Found
  * @argv: command line args
  * Return:  -1 if error 0 success
  */
 int cmd_exec(char **cmd, char *userinput, int c, char **argv)
 {
-        int wstatus;
-        pid_t pid;
+	int wstatus;
+	pid_t pid;
 
-        if (*cmd == NULL)
-                return (EXIT_FAILURE);
-        pid = fork();
-        if (pid == -1)
-        {
-                perror("./shell: No such file or directory");
-                return (-1);
-        }
-        if (pid == 0)
-        {
-                if (_strncmp(*cmd, "./", 2) != 0 && _strncmp(*cmd, "/", 1) != 0)
-                        path_exec(cmd);
-                if (access(cmd[0], R_OK) != 0)
-                {
-                        errormessage(cmd[0], c, argv);
-                        _free(cmd, userinput);
-                        exit(127);
-                }
-                if (execve(*cmd, cmd, environ) == -1)
-                        return (2);
-                else
-                        return (0);
-        }
-        wait(&wstatus);
-        if (WIFEXITED(wstatus))
-        {
-                if (WEXITSTATUS(wstatus) == 0)
-                        return (0);
-                else if (WEXITSTATUS(wstatus) == 2)
-                        return (2);
-                else if (WEXITSTATUS(wstatus) == 127)
-                        return (127);
-        }
-        return (127);
+	if (*cmd == NULL)
+		return (EXIT_FAILURE);
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("./shell: No such file or directory");
+		return (-1);
+	}
+	if (pid == 0)
+	{
+		if (_strncmp(*cmd, "./", 2) != 0 && _strncmp(*cmd, "/", 1) != 0)
+			path_exec(cmd);
+		if (access(cmd[0], R_OK) != 0)
+		{
+			errormessage(cmd[0], c, argv);
+			_free(cmd, userinput);
+			exit(127);
+		}
+		if (execve(*cmd, cmd, environ) == -1)
+			return (2);
+		else
+			return (0);
+	}
+	wait(&wstatus);
+	if (WIFEXITED(wstatus))
+	{
+		if (WEXITSTATUS(wstatus) == 0)
+			return (0);
+		else if (WEXITSTATUS(wstatus) == 2)
+			return (2);
+		else if (WEXITSTATUS(wstatus) == 127)
+			return (127);
+	}
+	return (127);
 }
 
 /**
@@ -89,7 +89,8 @@ int cmd_exec(char **cmd, char *userinput, int c, char **argv)
  * @status: last executed command history
  * Return: 0 on success or -1 on error
  */
-int cmd_history(__attribute__((unused))char **cmd, __attribute__((unused))int status)
+int cmd_history(__attribute__((unused))char **cmd,
+		__attribute__((unused))int status)
 {
 	char *filename = ".shell_cmd_history";
 	FILE *filepath;

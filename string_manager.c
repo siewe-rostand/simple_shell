@@ -93,63 +93,22 @@ int _strncmp(const char *str1, const char *str2, size_t n)
 
 char *_strdup(char *str)
 {
-        int length, i;
-        char *arr;
+	int length, i;
+	char *arr;
 
-        length = 0;
-        if (str == NULL)
-                return (NULL);
+	length = 0;
+	if (str == NULL)
+		return (NULL);
 
-        length = _strlen(str);
+	length = _strlen(str);
 
-        arr = malloc((length + 1) * sizeof(char));
-        if (arr == NULL)
-                return (NULL);
+	arr = malloc((length + 1) * sizeof(char));
+	if (arr == NULL)
+		return (NULL);
 
-        for (i = 0; i < length; i++)
-                arr[i] = str[i];
+	for (i = 0; i < length; i++)
+		arr[i] = str[i];
+	arr[i] = '\0';
 
-        arr[i] = '\0';
-
-        return (arr);
+	return (arr);
 }
-
-
-/**
- * _strlen - string length
- *
- * @str: param
- *
- * Return: int
- */
-
-int _strlen(char *str)
-{
-	int len = 0;
-
-	while (str[len] != '\0')
-		len++;
-
-	return (len);
-}
-
-
-/**
- * _strcpy - function that copies a string
- * @dest: destination
- * @src: source
- * Return: destination
- */
-char *_strcpy(char *dest, char *src)
-{
-	int i = 0;
-
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-

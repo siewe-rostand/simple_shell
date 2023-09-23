@@ -1,22 +1,17 @@
 #include "shell.h"
 
 /**
- * get_line - function to get user input
+ * _get_line - function to get user input
  *
  * Return: input string
  */
 
 char *_get_line(void)
 {
-	int i;
-	int read_string;
-	int buffersize;
-	char *buffer;
-	char *new_buffer;
-	char c = 0;
+	int i, read_string, buffersize;
+	char *buffer, *new_buffer, c = 0;
 
 	buffersize = BUFFSIZE;
-
 	buffer = malloc(buffersize);
 	if (buffer == NULL)
 	{

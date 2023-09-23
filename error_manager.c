@@ -7,15 +7,15 @@
  */
 void file_error_message(char **argv, int counter)
 {
-        char *er = _itoc(counter);
+	char *er = _itoc(counter);
 
-        prompt(argv[0]);
-        prompt(": ");
-        prompt(er);
-        prompt(": Can't open ");
-        prompt(argv[1]);
-        prompt("\n");
-        free(er);
+	prompt(argv[0]);
+	prompt(": ");
+	prompt(er);
+	prompt(": Can't open ");
+	prompt(argv[1]);
+	prompt("\n");
+	free(er);
 }
 
 
@@ -28,16 +28,16 @@ void file_error_message(char **argv, int counter)
 
 void errormessage(char *input, int counter, char **argv)
 {
-        char *error;
+	char *error;
 
-        prompt(argv[0]);
-        prompt(": ");
-        error = _itoc(counter);
-        prompt(error);
-        free(error);
-        prompt(": ");
-        prompt(input);
-        prompt(": No such file or directory\n");
+	prompt(argv[0]);
+	prompt(": ");
+	error = _itoc(counter);
+	prompt(error);
+	free(error);
+	prompt(": ");
+	prompt(input);
+	prompt(": No such file or directory\n");
 }
 
 /**
