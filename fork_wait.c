@@ -31,7 +31,7 @@ int fork_wait(char **cmd, char *userinput, int counter, char **argv)
 			_free(cmd, userinput);
 			exit(127);
 		}
-		if (execve(*cmd, cmd, ENV) == -1)
+		if (execve(*cmd, cmd, environ) == -1)
 			return (2);
 		else
 			return (0);

@@ -15,7 +15,7 @@
 #include <errno.h>
 #include <linux/limits.h>
 
-extern char **ENV;
+extern char **environ;
 void env_creation(char **envi);
 void free_environ(char **env);
 

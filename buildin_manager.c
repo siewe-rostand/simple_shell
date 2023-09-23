@@ -72,7 +72,7 @@ int buildin_echo(char **cmd)
         pid = fork();
         if (pid == 0)
         {
-                if (execve("/bin/echo", cmd, ENV) == -1)
+                if (execve("/bin/echo", cmd, environ) == -1)
                 {
                         return (-1);
                 }
@@ -183,10 +183,10 @@ int show_env(__attribute__((unused)) char **cmd, __attribute__((unused)) int st)
 	size_t i;
 	int len;
 
-	for (i = 0; ENV[i] != NULL; i++)
+	for (i = 0; environ[i] != NULL; i++)
 	{
-		len = _strlen(ENV[i]);
-		write(1, ENV[i], len);
+		len = _strlen(environ[i]);
+		write(1, environ[i], len);
 		write(STDOUT_FILENO, "\n", 1);
 	}
 	return (0);

@@ -12,11 +12,11 @@ char *_get_env(char *name)
 	int i, j, k;
 
 	name_len = _strlen(name);
-	for (i = 0 ; ENV[i]; i++)
+	for (i = 0 ; environ[i]; i++)
 	{
-		if (_strncmp(name, ENV[i], name_len) == 0)
+		if (_strncmp(name, environ[i], name_len) == 0)
 		{
-			value_len = _strlen(ENV[i]) - name_len;
+			value_len = _strlen(environ[i]) - name_len;
 			value = malloc(sizeof(char) * value_len);
 			if (!value)
 			{
@@ -26,9 +26,9 @@ char *_get_env(char *name)
 			}
 
 			j = 0;
-			for (k = name_len + 1; ENV[i][k]; k++, j++)
+			for (k = name_len + 1; environ[i][k]; k++, j++)
 			{
-				value[j] = ENV[i][k];
+				value[j] = environ[i][k];
 			}
 			value[j] = '\0';
 
